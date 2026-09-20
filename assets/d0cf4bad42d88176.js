@@ -1,0 +1,18 @@
+
+// Graph routing with two endpoint-swap cards. No full-puzzle search.
+function basicPlan(initial,bases){
+ const order=[4,13,6,11,5,12,3,14,2,15,9,8],edges=Array.from({length:17},()=>[]);
+ if(!Array.isArray(initial)||initial.length!==16||new Set(initial).size!==16||!initial.every(x=>Number.isInteger(x)&&x>=0&&x<16))throw Error('需要完整的4×4局面（0表示空格）。');
+ let parity=0;const perm=initial.map(x=>x||16);for(let i=0;i<16;i++)for(let j=i+1;j<16;j++)if(perm[i]>perm[j])parity^=1;
+ const blank=initial.indexOf(0);if(parity!==(((blank>>2)+(blank%4))%2))throw Error('此局面不可解，请回到游玩页面调整。');
+ for(let a=1;a<=16;a++)for(let b=1;b<=16;b++)if(knight(a,b))edges[a].push({to:b,route:[a,b],cost:1,name:'普通马步'});
+ bases.forEach((base,i)=>{if(i===0)return;for(let k=0;k<4;k++)for(const rev of [false,true]){let r=base.map(p=>trans(p,k));if(rev)r.reverse();edges[r[0]].push({to:r.at(-1),route:r,cost:r.length-1,name:(i?'10↔9':'10↔6')+' / '+['原位','主对角线','副对角线','180°'][k]+(rev?' / 反向':'')});}});
+ function path(start,end,blocked){const dist=new Map([[start,0]]),prev=new Map(),done=new Set();while(true){let u=null,best=Infinity;for(const[v,d]of dist)if(!done.has(v)&&d<best){u=v;best=d;}if(u===null)throw Error('未找到接应路线。');if(u===end){const out=[];for(let v=end;v!==start;){const p=prev.get(v);out.push(p.e);v=p.u;}return out.reverse();}done.add(u);for(const e of edges[u])if(!blocked.has(e.to)&&best+e.cost<(dist.get(e.to)??Infinity)){dist.set(e.to,best+e.cost);prev.set(e.to,{u,e});}}}
+ let b=initial.slice(),route=[blank+1],phases=[],stages=[],locked=[];
+ function execute(e,text,target){const start=route.length-1,before=b.slice();let formula=null;for(let family=0;family<bases.length;family++)for(let symmetry=0;symmetry<4;symmetry++)for(const reversed of [false,true]){const r=bases[family].map(p=>trans(p,symmetry));if(reversed)r.reverse();if(r.join()===e.route.join())formula={family:family===0?"10↔6":"10↔9",symmetry:["原位","主对角线镜像","副对角线镜像","180°旋转"][symmetry],reversed};}b=walk(b,e.route).at(-1);route.push(...e.route.slice(1));if(!locked.every(t=>b[t-1]===t))throw Error('保护检查失败');phases.push({start,end:route.length-1,text:text+' · '+e.name,target,locked:locked.slice(),edge:e.route,formula,kind:target===null?"收尾":text.startsWith("接应")?"接应":"送达",before,after:b.slice(),blankAfter:b.indexOf(0)+1,borrowed:[...new Set(e.route.slice(1,-1))].filter(p=>p!==e.route[0]&&p!==e.route.at(-1)).map(p=>({position:p,tile:before[p-1]}))});}
+ for(const target of order){const start=route.length-1;let x=b.indexOf(target)+1;const initialPosition=x;const delivery=path(x,target,new Set(locked));for(const e of delivery){for(const r of path(b.indexOf(0)+1,e.to,new Set([...locked,x])))execute(r,'接应：空格先到 '+e.to+' 格，暂避 '+target+'号',target);const reverse=edges[e.to].find(q=>q.to===x&&q.name===e.name)||{route:e.route.slice().reverse(),cost:e.cost,name:e.name+'（倒读）'};execute(reverse,'送达：'+target+'号从 '+x+' 格到 '+e.to+' 格',target);x=e.to;}if(b[target-1]!==target)throw Error('归位检查失败');locked.push(target);stages.push({target,start,end:route.length-1,locked:locked.slice(),targetRoute:[initialPosition,...delivery.map(e=>e.to)],blankAfter:b.indexOf(0)+1});}
+ const queue=[{b,rs:[b.indexOf(0)+1]}],seen=new Set([b.join()]);let end=null;for(const item of queue){if(item.b.every((t,i)=>t===(i+1)%16)){end=item.rs;break;}for(const e of edges[item.rs.at(-1)])if(e.cost===1&&[1,7,10,16].includes(e.to)){const nb=walk(item.b,e.route).at(-1);if(!seen.has(nb.join())){seen.add(nb.join());queue.push({b:nb,rs:item.rs.concat(e.to)});}}}
+ if(!end)throw Error('最后一环检查失败');const start=route.length-1;if(end.length>1)execute({route:end,cost:end.length-1,name:'红环转动'},'收尾：沿红环转动直到复原',null);stages.push({target:null,start,end:route.length-1,locked:locked.slice()});
+ return {route,phases,stages};
+}
+

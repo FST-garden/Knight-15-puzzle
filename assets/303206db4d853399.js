@@ -1,0 +1,7 @@
+
+const documents={"game":"views/game.html","human":"views/human.html","blind":"views/blind.html"};
+function showView(id){if(!Object.prototype.hasOwnProperty.call(documents,id))return;for(const key of Object.keys(documents)){const frame=document.getElementById('view-'+key);frame.hidden=key!==id;document.getElementById('tab-'+key).setAttribute('aria-selected',String(key===id));if(key===id&&!frame.dataset.loaded){frame.dataset.loaded='loading';frame.addEventListener('load',()=>{frame.dataset.loaded='yes';},{once:true});frame.src=documents[key];}}}
+function downloadOffline(){const a=document.createElement('a');a.href='orm-9t15p-v3.1.html';a.download='orm-9t15p-v3.1.html';document.body.appendChild(a);a.click();a.remove();}
+document.getElementById('download-offline').addEventListener('click',downloadOffline);
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+window.addEventListener('message',e=>{if(!Object.keys(documents).some(id=>document.getElementById('view-'+id).contentWindow===e.source))return;if(e.data?.type==='basic-board'&&e.source===document.getElementById('view-game').contentWindow){const f=document.getElementById('view-human');const send=()=>f.contentWindow.postMessage(e.data,'*');if(f.dataset.loaded!=='yes')f.addEventListener('load',send,{once:true});else send();showView('human');}else showView(e.data?.view);});showView('game');
