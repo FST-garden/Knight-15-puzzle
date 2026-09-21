@@ -3,7 +3,7 @@
 整理日期：2026-09-20｜对应本地发布版本：V3.1  
 Created by orm(UID:74633), GPT-assisted
 
-[项目仓库](https://github.com/guo-gc/Knight-15-puzzle) · [在线游玩](https://guo-gc.github.io/Knight-15-puzzle/)
+[项目仓库](https://github.com/FST-garden/Knight-15-puzzle) · [在线游玩](https://fst-garden.github.io/Knight-15-puzzle/)
 
 本文根据早期 `Questions.md`、`RESEARCH_HANDOFF.md` 和后续实现、实验记录重新整理。它取代旧文档中的**当前进展及下一步优先级**，保留历史资料作为追溯依据。本文不是完整实验日志，也不代表已完成独立审计。V3.1 指本地准备的发布物，不据此断言线上已经更新。
 

@@ -3,7 +3,7 @@
 **Research Progress & Open Questions · 2026-09-19**  
 **Created by orm(UID:74633), GPT-assisted**
 
-[在线游玩与思路演示](https://guo-gc.github.io/Knight-15-puzzle/) · [项目仓库](https://github.com/guo-gc/Knight-15-puzzle)
+[在线游玩与思路演示](https://fst-garden.github.io/Knight-15-puzzle/) · [项目仓库](https://github.com/FST-garden/Knight-15-puzzle)
 
 > 项目目前暂停主动开发，保留供后续研究。机器求解器已实现；人脑侧仍为 **思路演示（待优化）**，尚未形成经人类验证的简洁通用解法。项目未经独立代码或数学审计，也未经系统人类盲测。本报告汇总项目内部历史记录，不代表新的独立复现实验。
 

@@ -2,7 +2,7 @@
 
 Created by orm(UID:74633), GPT-assisted
 
-**当前展示版本：V3.1。** [在线游玩](https://guo-gc.github.io/Knight-15-puzzle/) · [版本记录](CHANGELOG.md) · [研究报告](report.md) · [上传说明](V3_UPLOAD.md)
+**当前展示版本：V3.1。** [在线游玩](https://fst-garden.github.io/Knight-15-puzzle/) · [版本记录](CHANGELOG.md) · [研究报告](report.md) · [上传说明](V3_UPLOAD.md)
 
 ## 中文
 
@@ -63,7 +63,7 @@ Created by orm(UID:74633), GPT-assisted
 - V3_UPLOAD.md：上传与Pages配置步骤。
 - 旧版HTML、pages目录及研究报告如仍保留，属于历史资料，不代表V3菜单全部收录。
 
-Git提交记录保存每次文件变更；Release/Tag需要单独创建。版本记录采用V3/V2等项目版本名，不虚构历史发布日期。参见[提交历史](https://github.com/guo-gc/Knight-15-puzzle/commits/main/)和[Releases](https://github.com/guo-gc/Knight-15-puzzle/releases)。
+Git提交记录保存每次文件变更；Release/Tag需要单独创建。版本记录采用V3/V2等项目版本名，不虚构历史发布日期。参见[提交历史](https://github.com/FST-garden/Knight-15-puzzle/commits/main/)和[Releases](https://github.com/FST-garden/Knight-15-puzzle/releases)。
 
 ## English
 

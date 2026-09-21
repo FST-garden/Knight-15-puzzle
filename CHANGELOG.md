@@ -2,6 +2,12 @@
 
 这是人工整理的版本摘要；精确文件修改时间与内容以Git提交记录为准。历史版本未核实的发布日期不补写。
 
+## 2026-09-21 — 账号与发布链接更新
+
+- 公开仓库迁至 FST-garden，在线地址更新为 https://fst-garden.github.io/Knight-15-puzzle/。
+- 更新 README 和两份研究报告的链接，补齐 README 引用的 V3_UPLOAD.md。
+- 本次为文档与仓库 About 链接修正，游戏功能不变。
+
 ## V3.1
 
 - 在线版拆分index.html、views/和assets/，内容哈希文件名用于独立资源缓存；双PDB保留。
